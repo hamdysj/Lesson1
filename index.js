@@ -1,6 +1,10 @@
 
 
 const fs = require('fs');
+const http = require('http');
+
+/////////////////////////////////////////////////////////////////
+//FILES
 /*
 //Blocking & Synchronous Way: Executes LineByLine
 const textIn = fs.readFileSync('./txt/input.txt', 'utf-8');
@@ -11,7 +15,7 @@ fs.writeFileSync('./txt/output.txt', textOut);
 console.log("File Written");
 */
 
-
+/*
 //Non-Blocking & Asynchronous Way: Uses Callback Functions
 fs.readFile('./txt/start.txt', 'utf-8', (err, data1) => {
     if(err) return console.log("ERROR ");
@@ -27,4 +31,14 @@ fs.readFile('./txt/start.txt', 'utf-8', (err, data1) => {
     });
 });
 console.log("Will execute first");
+*/
 
+////////////////////////////////////////////////////////////////////////////////
+//SERVER
+const server = http.createServer((req, res)=>{
+    res.end('Hello from the Server');
+});
+
+server.listen(8000, '127.0.0.1', () =>{
+    console.log("Listening to port 8000");
+});
