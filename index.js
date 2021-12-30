@@ -2,6 +2,7 @@
 
 const fs = require('fs');
 const http = require('http');
+const url = require('url');
 
 /////////////////////////////////////////////////////////////////
 //FILES
@@ -36,6 +37,8 @@ console.log("Will execute first");
 ////////////////////////////////////////////////////////////////////////////////
 //SERVER
 const server = http.createServer((req, res)=>{
+    const pathName = req.url;
+    console.log(pathName);
     res.end('Hello from the Server');
 });
 
