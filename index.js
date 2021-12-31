@@ -36,10 +36,29 @@ console.log("Will execute first");
 
 ////////////////////////////////////////////////////////////////////////////////
 //SERVER
+const data = fs.readFileSync(`${__dirname}/dev-data/data.json`, 'utf-8');
+const dataObj = JSON.parse(data);
+
 const server = http.createServer((req, res)=>{
     const pathName = req.url;
-    console.log(pathName);
-    res.end('Hello from the Server');
+
+   if(pathName === '/' || pathName === '/overview')
+   {
+    res.end('Welcome to Overview');
+   }
+   else if(pathName === '/product')
+    {
+    res.end('Welcome to Overview');
+   } 
+   else if(pathName === '/api')
+   {
+        res.writeHead(200, {'Content-type': 'application/json'});
+        res.end(data);
+   }
+   else{
+       res.writeHead(404, {'Content-type': 'text/html'});
+       res.end('<h1>Page not Found!</h1>')
+   }
 });
 
 server.listen(8000, '127.0.0.1', () =>{
