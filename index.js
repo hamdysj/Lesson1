@@ -36,19 +36,29 @@ console.log("Will execute first");
 
 ////////////////////////////////////////////////////////////////////////////////
 //SERVER
+const overView = fs.readFileSync(`${__dirname}/templates/template_overview.html`, 'utf-8');
+const product = fs.readFileSync(`${__dirname}/templates/product.html`, 'utf-8');
+const tempCard = fs.readFileSync(`${__dirname}/templates/template_product.html`, 'utf-8');
+
 const data = fs.readFileSync(`${__dirname}/dev-data/data.json`, 'utf-8');
 const dataObj = JSON.parse(data);
 
 const server = http.createServer((req, res)=>{
     const pathName = req.url;
 
+    //Overview Page
    if(pathName === '/' || pathName === '/overview')
    {
-    res.end('Welcome to Overview');
+    res.writeHead(200, {'Content-type': 'text/html'});
+
+    const dataHtml = dataObj.map(el => ())
+
+
+    res.end(overView);
    }
    else if(pathName === '/product')
     {
-    res.end('Welcome to Overview');
+    res.end('overView');
    } 
    else if(pathName === '/api')
    {
