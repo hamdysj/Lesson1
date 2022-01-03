@@ -36,6 +36,19 @@ console.log("Will execute first");
 
 ////////////////////////////////////////////////////////////////////////////////
 //SERVER
+const replaceTemplate = (temp, product) => {
+    let output = temp.replace(/{%PRODUCTNAME%}/g, product.productName);
+    output = output.replace(/{%IMAGE%}/g, product.image);
+    output = output.replace(/{%QUANTITY%}/g, product.quantity);
+    output = output.replace(/{%PRICE%}/g, product.price);
+    output = output.replace(/{%NUTRIENTS%}/g, product.nutrients);
+    output = output.replace(/{%DESCRIPTION%}/g, product.description);
+
+    if(!product.organic) output = output.replace(/{%NOT_ORGANIC%}/g, 'not-organic');
+    return output;
+}
+
+
 const overView = fs.readFileSync(`${__dirname}/templates/template_overview.html`, 'utf-8');
 const product = fs.readFileSync(`${__dirname}/templates/product.html`, 'utf-8');
 const tempCard = fs.readFileSync(`${__dirname}/templates/template_product.html`, 'utf-8');
@@ -51,14 +64,15 @@ const server = http.createServer((req, res)=>{
    {
     res.writeHead(200, {'Content-type': 'text/html'});
 
-    const dataHtml = dataObj.map(el => ())
-
-
-    res.end(overView);
+    const dataHtml = dataObj.map(el => replaceTemplate(tempCard, el)).join('');
+    const display = overView.replace(/{%PRODUCT_TEMPLATE%}/g, dataHtml);
+    res.end(display);
    }
    else if(pathName === '/product')
     {
-    res.end('overView');
+        res.writeHead(200, {'Content-type': 'text/html'});
+    const dataHtml = dataObj.map(el => replaceTemplate(tempCard, el)).join('');   
+    res.end(dataHtml);
    } 
    else if(pathName === '/api')
    {
