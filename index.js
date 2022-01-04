@@ -3,13 +3,14 @@
 const fs = require('fs');
 const http = require('http');
 const url = require('url');
+const replaceTemplate = require('./modules/replaceTemplate');
 
 /////////////////////////////////////////////////////////////////
 //FILES
 /*
 //Blocking & Synchronous Way: Executes LineByLine
 const textIn = fs.readFileSync('./txt/input.txt', 'utf-8');
-console.log(textIn);
+console.log(textIn); 
 
 const textOut = `This is what we know about avocado ${textIn}. \n Created on ${Date.now}`;
 fs.writeFileSync('./txt/output.txt', textOut);
@@ -36,21 +37,6 @@ console.log("Will execute first");
 
 ////////////////////////////////////////////////////////////////////////////////
 //SERVER
-const replaceTemplate = (temp, product) => {
-    let output = temp.replace(/{%PRODUCTNAME%}/g, product.productName);
-    output = output.replace(/{%IMAGE%}/g, product.image);
-    output = output.replace(/{%QUANTITY%}/g, product.quantity);
-    output = output.replace(/{%PRICE%}/g, product.price);
-    output = output.replace(/{%NUTRIENTS%}/g, product.nutrients);
-    output = output.replace(/{%DESCRIPTION%}/g, product.description);
-    output = output.replace(/{%ID%}/g, product.id);
-    output = output.replace(/{%FROM%}/g, product.from);
-
-    if(!product.organic) output = output.replace(/{%NOT_ORGANIC%}/g, 'not-organic');
-    return output;
-}
-
-
 const overView = fs.readFileSync(`${__dirname}/templates/template_overview.html`, 'utf-8');
 const product = fs.readFileSync(`${__dirname}/templates/product.html`, 'utf-8');
 const tempCard = fs.readFileSync(`${__dirname}/templates/template_product.html`, 'utf-8');
