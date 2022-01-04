@@ -2,6 +2,7 @@
 
 const fs = require('fs');
 const http = require('http');
+const { default: slugify } = require('slugify');
 const url = require('url');
 const replaceTemplate = require('./modules/replaceTemplate');
 
@@ -43,6 +44,11 @@ const tempCard = fs.readFileSync(`${__dirname}/templates/template_product.html`,
 
 const data = fs.readFileSync(`${__dirname}/dev-data/data.json`, 'utf-8');
 const dataObj = JSON.parse(data);
+
+//Using Slugify
+const slugs = dataObj.map(el => slugify(el.productName, {lower: true}));
+console.log(slugs);
+
 
 const server = http.createServer((req, res)=>{
 
